@@ -181,8 +181,7 @@ fig.update_traces(customdata=customdata, text=text_data)
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
-    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
-    hoverinfo="text+customdata"
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
 )
 
 # Anpassen der Größe und Layout der Grafik
