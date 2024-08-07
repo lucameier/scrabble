@@ -1,7 +1,6 @@
 import streamlit as st
-import networkx as nx
-import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.express as px
 
 # Liste der gültigen 2-Buchstaben-Wörter im englischen Scrabble
 two_letter_words = [
@@ -138,47 +137,43 @@ word_descriptions = {
     "za": "Pizza."
 }
 
+# Buchstaben des Alphabets
+alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
-# Erstelle ein Netzwerkdiagramm
-G = nx.Graph()
+# Kreuztabelle initialisieren
+crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 
-# Füge Knoten hinzu
-for letter in list("abcdefghijklmnopqrstuvwxyz"):
-    G.add_node(letter)
-
-# Füge Kanten hinzu
+# Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
-    G.add_edge(word[0], word[1], label=word)
+    first, second = word
+    crosstab.loc[first, second] = word
 
-# Streamlit App
+# Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
-st.title("Interactive 2-Letter Scrabble Words Network")
+# Erstelle eine Plotly-Heatmap
+fig = px.imshow(
+    crosstab.applymap(lambda x: len(x)),  # Erstelle eine Heatmap basierend auf der Länge des Inhalts
+    labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
+    x=alphabet,
+    y=alphabet,
+    color_continuous_scale="Viridis",
+    text_auto=True
+)
 
-# Visualisierung des Graphen
-pos = nx.spring_layout(G, seed=42)
+# Füge Beschreibungen als Hover-Information hinzu
+for i, row in enumerate(alphabet):
+    for j, col in enumerate(alphabet):
+        word = crosstab.loc[row, col]
+        if word in word_descriptions:
+            fig.data[0].text[i][j] = word.upper()  # Zeige das Wort in Großbuchstaben
+            fig.data[0].customdata[i][j] = word_descriptions[word]
 
-# Zeichne die Knoten
-nx.draw_networkx_nodes(G, pos, node_size=3000, node_color='#FFDDC1', linewidths=1, edgecolors='black')
-nx.draw_networkx_labels(G, pos, font_size=12, font_color='black', font_weight='bold')
+fig.update_traces(
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
+    textposition="middle center"
+)
 
-# Zeichne die Kanten
-edges = nx.draw_networkx_edges(G, pos, width=1.5, edge_color='#B0C4DE')
-
-# Interaktivität implementieren
-hovered_word = st.selectbox("Select a word to view its description", two_letter_words)
-
-# Zeige die Beschreibung des ausgewählten Wortes an
-if hovered_word in word_descriptions:
-    description = word_descriptions[hovered_word]
-    st.markdown(f"### **{hovered_word.upper()}**: {description}")
-
-# Markiere die ausgewählte Kante
-highlight = [edge for edge in G.edges(data=True) if edge[2]['label'] == hovered_word]
-nx.draw_networkx_edges(G, pos, edgelist=highlight, width=3, edge_color='red')
-
-# Plot anzeigen
-fig, ax = plt.subplots(figsize=(12, 12))
-nx.draw(G, pos, with_labels=True, node_size=3000, node_color='#FFDDC1', font_size=12, font_weight='bold', edge_color='#B0C4DE', ax=ax)
-nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'label'), font_color='gray', ax=ax)
-st.pyplot(fig)
+# Zeige das Diagramm an
+st.plotly_chart(fig, use_container_width=True)
