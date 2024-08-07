@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 # Liste der gültigen 2-Buchstaben-Wörter im englischen Scrabble
 two_letter_words = [
@@ -152,15 +153,18 @@ for word in two_letter_words:
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
-# Erstelle eine Plotly-Heatmap
+# Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    crosstab.applymap(lambda x: len(x)),  # Erstelle eine Heatmap basierend auf der Länge des Inhalts
+    crosstab.applymap(lambda x: 1 if x else 0),  # 1 für vorhandene Wörter, 0 sonst
     labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
-    color_continuous_scale="Viridis",
+    color_continuous_scale="Greens",  # Verwendung einer ansprechenden Farbskala
     text_auto=True
 )
+
+# Initialisiere customdata mit Beschreibungen
+customdata = np.empty((26, 26), dtype=object)
 
 # Füge Beschreibungen als Hover-Information hinzu
 for i, row in enumerate(alphabet):
@@ -168,8 +172,12 @@ for i, row in enumerate(alphabet):
         word = crosstab.loc[row, col]
         if word in word_descriptions:
             fig.data[0].text[i][j] = word.upper()  # Zeige das Wort in Großbuchstaben
-            fig.data[0].customdata[i][j] = word_descriptions[word]
+            customdata[i][j] = word_descriptions[word]  # Füge Beschreibung hinzu
 
+# Setze customdata für die Trace
+fig.update_traces(customdata=customdata)
+
+# Hover-Template einstellen
 fig.update_traces(
     hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
     textposition="middle center"
