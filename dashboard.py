@@ -160,7 +160,8 @@ fig = px.imshow(
     x=alphabet,
     y=alphabet,
     color_continuous_scale="Greens",  # Verwendung einer ansprechenden Farbskala
-    text_auto=True
+    text_auto=True,
+    aspect="auto"  # Automatische Anpassung des Aspekts
 )
 
 # Initialisiere customdata mit Beschreibungen
@@ -171,16 +172,25 @@ text_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
+        text_data[i][j] = word.upper() if word else ""  # Zeige das Wort in Großbuchstaben
         if word in word_descriptions:
-            text_data[i][j] = word.upper()  # Zeige das Wort in Großbuchstaben
             customdata[i][j] = word_descriptions[word]  # Füge Beschreibung hinzu
 
 # Setze customdata und text für die Trace
 fig.update_traces(customdata=customdata, text=text_data)
 
-# Hover-Template einstellen
+# Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
-    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
+    hoverinfo="text+customdata"
+)
+
+# Anpassen der Größe und Layout der Grafik
+fig.update_layout(
+    autosize=False,
+    width=1000,
+    height=1000,
+    margin=dict(l=50, r=50, b=50, t=50),
 )
 
 # Zeige das Diagramm an
