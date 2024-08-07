@@ -155,7 +155,7 @@ st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    crosstab.applymap(lambda x: 1 if x else 0),  # 1 für vorhandene Wörter, 0 sonst
+    crosstab.map(lambda x: 1 if x else 0),  # Verwende DataFrame.map anstelle von applymap
     labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
@@ -167,15 +167,16 @@ fig = px.imshow(
 customdata = np.empty((26, 26), dtype=object)
 
 # Füge Beschreibungen als Hover-Information hinzu
+text_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
         if word in word_descriptions:
-            fig.data[0].text[i][j] = word.upper()  # Zeige das Wort in Großbuchstaben
+            text_data[i][j] = word.upper()  # Zeige das Wort in Großbuchstaben
             customdata[i][j] = word_descriptions[word]  # Füge Beschreibung hinzu
 
-# Setze customdata für die Trace
-fig.update_traces(customdata=customdata)
+# Setze customdata und text für die Trace
+fig.update_traces(customdata=customdata, text=text_data)
 
 # Hover-Template einstellen
 fig.update_traces(
