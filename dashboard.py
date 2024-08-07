@@ -138,6 +138,7 @@ word_descriptions = {
     "za": "Pizza."
 }
 
+
 # Erstelle ein Netzwerkdiagramm
 G = nx.Graph()
 
@@ -149,30 +150,35 @@ for letter in list("abcdefghijklmnopqrstuvwxyz"):
 for word in two_letter_words:
     G.add_edge(word[0], word[1], label=word)
 
-# Erstelle die interaktive Visualisierung
-st.title("Interactive 2-Letter Scrabble Words")
+# Streamlit App
+st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+
+st.title("Interactive 2-Letter Scrabble Words Network")
 
 # Visualisierung des Graphen
 pos = nx.spring_layout(G, seed=42)
 
 # Zeichne die Knoten
-nx.draw_networkx_nodes(G, pos, node_size=2000, node_color='lightblue')
-nx.draw_networkx_labels(G, pos, font_size=10, font_color='darkblue', font_weight='bold')
+nx.draw_networkx_nodes(G, pos, node_size=3000, node_color='#FFDDC1', linewidths=1, edgecolors='black')
+nx.draw_networkx_labels(G, pos, font_size=12, font_color='black', font_weight='bold')
 
 # Zeichne die Kanten
-edges = nx.draw_networkx_edges(G, pos, edge_color='gray')
+edges = nx.draw_networkx_edges(G, pos, width=1.5, edge_color='#B0C4DE')
 
 # Interaktivität implementieren
-edge_labels = nx.get_edge_attributes(G, 'label')
 hovered_word = st.selectbox("Select a word to view its description", two_letter_words)
 
 # Zeige die Beschreibung des ausgewählten Wortes an
 if hovered_word in word_descriptions:
     description = word_descriptions[hovered_word]
-    st.write(f"**{hovered_word.upper()}**: {description}")
+    st.markdown(f"### **{hovered_word.upper()}**: {description}")
+
+# Markiere die ausgewählte Kante
+highlight = [edge for edge in G.edges(data=True) if edge[2]['label'] == hovered_word]
+nx.draw_networkx_edges(G, pos, edgelist=highlight, width=3, edge_color='red')
 
 # Plot anzeigen
-fig, ax = plt.subplots()
-nx.draw(G, pos, with_labels=True, node_size=2000, node_color='lightblue', font_size=10, font_weight='bold', edge_color='gray', ax=ax)
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red', ax=ax)
+fig, ax = plt.subplots(figsize=(12, 12))
+nx.draw(G, pos, with_labels=True, node_size=3000, node_color='#FFDDC1', font_size=12, font_weight='bold', edge_color='#B0C4DE', ax=ax)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'label'), font_color='gray', ax=ax)
 st.pyplot(fig)
