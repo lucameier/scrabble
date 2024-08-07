@@ -155,12 +155,11 @@ st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    crosstab.applymap(lambda x: 1 if x else 0),  # 1 für vorhandene Wörter, 0 sonst
-    labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
+    crosstab.replace('', np.nan),  # Zeige nichts für leere Felder
+    labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
     y=alphabet,
-    color_continuous_scale="Greens",  # Verwendung einer ansprechenden Farbskala
-    text_auto=True,
+    color_continuous_scale="Blues",  # Farben für existierende Wörter
     aspect="auto"  # Automatische Anpassung des Aspekts
 )
 
@@ -181,7 +180,8 @@ fig.update_traces(customdata=customdata, text=text_data)
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
-    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
+    hoverinfo="skip"
 )
 
 # Anpassen der Größe und Layout der Grafik
