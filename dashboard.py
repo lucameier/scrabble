@@ -15,8 +15,8 @@ two_letter_words = [
     "id", "if", "in", "is", "it",
     "jo",
     "ka", "ki",
-    "la", "li", "lo",
-    "ma", "me", "mi", "mm", "mo", "mu", "my",
+    "la", "li",
+    "lo", "ma", "me", "mi", "mm", "mo", "mu", "my",
     "na", "ne", "no", "nu",
     "od", "oe", "of", "oh", "oi", "om", "on", "op", "or", "os", "ow", "ox", "oy",
     "pa", "pe", "pi",
@@ -155,7 +155,7 @@ st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    crosstab.map(lambda x: 1 if x else 0),  # Verwende DataFrame.map anstelle von applymap
+    crosstab.applymap(lambda x: 1 if x else 0),  # 1 für vorhandene Wörter, 0 sonst
     labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
@@ -180,8 +180,7 @@ fig.update_traces(customdata=customdata, text=text_data)
 
 # Hover-Template einstellen
 fig.update_traces(
-    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
-    textposition="middle center"
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
 )
 
 # Zeige das Diagramm an
