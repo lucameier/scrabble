@@ -147,7 +147,7 @@ crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 # Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
     first, second = word
-    crosstab.loc[first, second] = word.upper()  # Wörter in Großbuchstaben
+    crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
 # Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
@@ -155,27 +155,29 @@ st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    crosstab.replace('', np.nan),  # Zeige NaN für leere Felder
-    labels=dict(x="Second Letter", y="First Letter"),
+    crosstab.applymap(lambda x: 1 if x else 0),  # Verwende 1 für vorhandene Wörter, um die Farbskala zu steuern
+    labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
-    color_continuous_scale="Blues",  # Farben für existierende Wörter
-    aspect="auto",  # Automatische Anpassung des Aspekts
-    text_auto=True  # Zeige den Text automatisch
+    color_continuous_scale="Greens",  # Verwendung einer ansprechenden Farbskala
+    text_auto=True,
+    aspect="auto"  # Automatische Anpassung des Aspekts
 )
 
 # Initialisiere customdata mit Beschreibungen
 customdata = np.empty((26, 26), dtype=object)
 
 # Füge Beschreibungen als Hover-Information hinzu
+text_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
-        if word in word_descriptions:
+        text_data[i][j] = word if word else ""  # Zeige das Wort in Großbuchstaben
+        if word.lower() in word_descriptions:
             customdata[i][j] = word_descriptions[word.lower()]  # Füge Beschreibung hinzu
 
-# Setze customdata für die Trace
-fig.update_traces(customdata=customdata)
+# Setze customdata und text für die Trace
+fig.update_traces(customdata=customdata, text=text_data)
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
