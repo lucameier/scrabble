@@ -142,7 +142,6 @@ word_descriptions = {
 
 
 
-
 # Buchstaben des Alphabets
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
@@ -157,12 +156,15 @@ for word in two_letter_words:
 # Erstelle eine Matrix für die Farbdarstellung (1 für Wörter, 0 für leere Felder)
 color_matrix = np.where(crosstab != '', 1, 0)
 
-# Initialisiere customdata mit Hover-Information
+# Initialisiere customdata mit Beschreibungen
+customdata = np.empty((26, 26), dtype=object)
+
+# Füge Beschreibungen als Hover-Information hinzu
 hover_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
-        hover_data[i][j] = word.upper() if word else ""
+        hover_data[i][j] = word_descriptions[word.lower()] if word.lower() in word_descriptions else ""
 
 # Erstelle die Plotly-Heatmap mit Annotationen
 fig = px.imshow(
@@ -181,27 +183,14 @@ fig.update_traces(
     texttemplate="<b>%{text}</b>",
     textfont_size=16,  # Größere Schriftgröße für Text
     customdata=hover_data,
-    hovertemplate="<b>%{customdata}</b><extra></extra>"
+    hovertemplate="%{customdata}<extra></extra>",  # Nur für gültige Wörter anzeigen
+    hoverinfo="skip"  # Standardmäßig Hoverinformationen überspringen
 )
 
 # Entferne Skala und setze Gitterlinien
 fig.update_layout(
-    xaxis=dict(
-        tickvals=list(range(len(alphabet))),
-        ticktext=alphabet,
-        side="top",
-        showgrid=True,
-        gridcolor='lightgray',
-        gridwidth=1
-    ),
-    yaxis=dict(
-        tickvals=list(range(len(alphabet))),
-        ticktext=alphabet[::-1],
-        autorange="reversed",
-        showgrid=True,
-        gridcolor='lightgray',
-        gridwidth=1
-    ),
+    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top", showgrid=True, gridcolor='lightgray', gridwidth=1),
+    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=True, gridcolor='lightgray', gridwidth=1),
     coloraxis_showscale=False,
     margin=dict(l=50, r=50, b=50, t=50),
     width=1000,
