@@ -149,21 +149,17 @@ for word in two_letter_words:
     first, second = word
     crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
-# Erstelle eine Matrix mit NaN für leere Felder und 1 für vorhandene Wörter
-data_matrix = crosstab.applymap(lambda x: 1 if x else np.nan)
-
 # Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap
 fig = px.imshow(
-    data_matrix,  # Verwende NaN für leere Felder
+    np.where(crosstab != '', 1, np.nan),  # Verwende NaN für leere Felder
     labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
     color_continuous_scale="Greens",
-    text_auto=True,
     aspect="auto"  # Automatische Anpassung des Aspekts
 )
 
