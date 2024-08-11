@@ -154,47 +154,42 @@ for word in two_letter_words:
     first, second = word
     crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
-# Erstelle eine Matrix für die Farbdarstellung (NaN für keine Farbe)
-color_matrix = np.where(crosstab != '', 0.5, np.nan)
-
 # Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
-# Erstelle die Plotly-Heatmap mit Annotationen
-fig = px.imshow(
-    color_matrix,  # Verwende NaN für leere Felder
-    labels=dict(x="Second Letter", y="First Letter"),
+import plotly.graph_objects as go
+
+# Erstelle die Plotly-Heatmap mit grauen Linien
+fig = go.Figure(data=go.Heatmap(
+    z=np.ones(crosstab.shape),  # Dummy-Daten für die Heatmap
     x=alphabet,
-    y=alphabet,
-    color_continuous_scale=[(0.0, "white"), (1.0, "lightgreen")],
-    aspect="auto"  # Automatische Anpassung des Aspekts
-)
+    y=alphabet[::-1],  # Y-Achse umkehren
+    text=crosstab.values,
+    texttemplate="<b>%{text}</b>",
+    colorscale=[[0, 'white'], [1, 'lightgreen']],
+    showscale=False,
+    xgap=1,  # Lücke für horizontale Linien
+    ygap=1   # Lücke für vertikale Linien
+))
 
 # Initialisiere customdata mit Beschreibungen
 customdata = np.empty((26, 26), dtype=object)
 
 # Füge Beschreibungen als Hover-Information hinzu
-text_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
-        text_data[i][j] = word if word else ""  # Zeige das Wort in Großbuchstaben
         if word.lower() in word_descriptions:
             customdata[i][j] = word_descriptions[word.lower()]  # Füge Beschreibung hinzu
 
-# Setze customdata und text für die Trace
-fig.update_traces(customdata=customdata, text=text_data, texttemplate="<b>%{text}</b>", textfont={"size": 14})
+# Setze customdata für die Trace
+fig.update_traces(customdata=customdata)
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
-    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
-    showscale=False  # Skala nicht anzeigen
+    hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
 )
-
-# Achsenbeschriftungen auf allen Seiten
-fig.update_xaxes(side="top", showgrid=False, tickvals=list(range(26)))
-fig.update_yaxes(autorange="reversed", showgrid=False, tickvals=list(range(26)))
 
 # Anpassen der Größe und Layout der Grafik
 fig.update_layout(
@@ -202,14 +197,23 @@ fig.update_layout(
     width=1000,
     height=1000,
     margin=dict(l=50, r=50, b=50, t=50),
-    xaxis_title="Second Letter",
-    yaxis_title="First Letter",
-    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top"),
-    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, autorange="reversed"),
+    xaxis=dict(
+        showgrid=True,
+        gridcolor='lightgray',  # Farbe der vertikalen Gitterlinien
+        gridwidth=0.5,
+        tickvals=list(range(len(alphabet))),
+        ticktext=alphabet,
+        side="top"
+    ),
+    yaxis=dict(
+        showgrid=True,
+        gridcolor='lightgray',  # Farbe der horizontalen Gitterlinien
+        gridwidth=0.5,
+        tickvals=list(range(len(alphabet))),
+        ticktext=alphabet[::-1],  # Umgekehrte Reihenfolge für Y-Achse
+        autorange="reversed"
+    ),
 )
-
-# Fügen Sie Lücken zwischen den Kacheln hinzu, um die Ränder zu zeigen
-fig.update_traces(xgap=2, ygap=2)
 
 # Zeige das Diagramm an
 st.plotly_chart(fig, use_container_width=True)
