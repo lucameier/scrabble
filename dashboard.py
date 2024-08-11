@@ -172,7 +172,7 @@ fig = px.imshow(
     labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
     y=alphabet[::-1],  # Umgekehrte Y-Achse für klassische Darstellung
-    color_continuous_scale=[(0.0, "white"), (1.0, "lightgreen")],
+    color_continuous_scale=[(0.0, "lightred"), (1.0, "lightgreen")],
     aspect="auto",  # Automatische Anpassung des Aspekts
     text_auto=True
 )
@@ -183,7 +183,7 @@ fig.update_traces(
     texttemplate="<b>%{text}</b>",
     textfont_size=16,  # Größere Schriftgröße für Text
     customdata=hover_data,
-    hovertemplate="<span style='font-size:14px'><b>%{text}</b><br>Description: %{customdata}</span><extra></extra>",  # Größere Schrift im Tooltip
+    hovertemplate="<span style='font-size:16px'>%{customdata}</span><extra></extra>",
     hoverinfo="skip"  # Standardmäßig Hoverinformationen überspringen
 )
 
