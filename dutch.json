@@ -1,0 +1,43 @@
+{
+    "two_letter_words": [
+      "af", "al", "an", "as", "be", "bi", "bo", "da", "de", "do", "ei", "en", "er", "es", "et", "ga", "he", "hi", "ik", "in", "ja", "je", "ke", "ma", "me", "na", "nu", "of", "om", "op", "te", "to", "ui", "we", "ze"
+    ],
+    "word_descriptions": {
+      "af": "Off.",
+      "al": "Already.",
+      "an": "An.",
+      "as": "Ash.",
+      "be": "Be.",
+      "bi": "Bi (bisexual).",
+      "bo": "A friend or mate.",
+      "da": "There.",
+      "de": "The.",
+      "do": "Musical note.",
+      "ei": "Egg.",
+      "en": "And.",
+      "er": "There.",
+      "es": "Ace.",
+      "et": "Eat.",
+      "ga": "Go.",
+      "he": "He.",
+      "hi": "Hi.",
+      "ik": "I.",
+      "in": "In.",
+      "ja": "Yes.",
+      "je": "You.",
+      "ke": "Little.",
+      "ma": "Mother.",
+      "me": "Me.",
+      "na": "After.",
+      "nu": "Now.",
+      "of": "Or.",
+      "om": "About.",
+      "op": "Up.",
+      "te": "To.",
+      "to": "Toe.",
+      "ui": "Onion.",
+      "we": "We.",
+      "ze": "She."
+    }
+  }
+  

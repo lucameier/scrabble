@@ -14,7 +14,7 @@ def load_language_data(language):
     return data
 
 # Verfügbare Sprachen
-languages = ["english", "german"]
+languages = ["english", "french", "spanish", "german", "italian", "portuguese", "dutch"]
 
 # Sprache auswählen
 selected_language = st.selectbox("Select Language", languages)

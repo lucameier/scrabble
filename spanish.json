@@ -1,0 +1,32 @@
+{
+    "two_letter_words": [
+      "ah", "ay", "de", "di", "el", "en", "es", "ha", "he", "la", "lo", "me", "mi", "no", "oh", "os", "oy", "se", "si", "ta", "te", "ti", "tu", "ya"
+    ],
+    "word_descriptions": {
+      "ah": "Expression of realization.",
+      "ay": "Expression of pain or surprise.",
+      "de": "Of, from.",
+      "di": "Say (imperative).",
+      "el": "The (masculine singular).",
+      "en": "In, on.",
+      "es": "Is (third person singular of ser).",
+      "ha": "Has (third person singular of haber).",
+      "he": "Have (first person singular of haber).",
+      "la": "The (feminine singular).",
+      "lo": "The (neuter).",
+      "me": "Me.",
+      "mi": "My.",
+      "no": "No.",
+      "oh": "Expression of surprise.",
+      "os": "You (plural informal).",
+      "oy": "Today.",
+      "se": "Himself, herself, itself.",
+      "si": "If.",
+      "ta": "Your (informal, feminine).",
+      "te": "You (informal).",
+      "ti": "You (object form).",
+      "tu": "Your (informal).",
+      "ya": "Already."
+    }
+  }
+  
