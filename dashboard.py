@@ -153,9 +153,9 @@ for word in two_letter_words:
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
-# Erstelle die Plotly-Heatmap
+# Erstelle die Plotly-Heatmap mit Annotationen
 fig = px.imshow(
-    np.where(crosstab != '', 1, np.nan),  # Verwende NaN für leere Felder
+    np.ones(crosstab.shape),  # Dummy-Daten für die Heatmap
     labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
     x=alphabet,
     y=alphabet,
@@ -176,7 +176,7 @@ for i, row in enumerate(alphabet):
             customdata[i][j] = word_descriptions[word.lower()]  # Füge Beschreibung hinzu
 
 # Setze customdata und text für die Trace
-fig.update_traces(customdata=customdata, text=text_data)
+fig.update_traces(customdata=customdata, text=text_data, texttemplate="%{text}")
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
