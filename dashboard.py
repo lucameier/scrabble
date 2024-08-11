@@ -183,7 +183,7 @@ fig.update_traces(
     texttemplate="<b>%{text}</b>",
     textfont_size=16,  # Größere Schriftgröße für Text
     customdata=hover_data,
-    hovertemplate="%{customdata}<extra></extra>",  # Nur für gültige Wörter anzeigen
+    hovertemplate="<span style='font-size:14px'><b>%{text}</b><br>Description: %{customdata}</span><extra></extra>",  # Größere Schrift im Tooltip
     hoverinfo="skip"  # Standardmäßig Hoverinformationen überspringen
 )
 
@@ -196,6 +196,9 @@ fig.update_layout(
     width=1000,
     height=1000,
 )
+
+# Setze Lücken zwischen den Zellen
+fig.update_traces(xgap=2, ygap=2)
 
 # Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
