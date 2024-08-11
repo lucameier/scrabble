@@ -142,7 +142,6 @@ word_descriptions = {
 
 
 
-
 # Buchstaben des Alphabets
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
@@ -160,13 +159,17 @@ st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 import plotly.graph_objects as go
 
+# Erstelle eine Maskenmatrix für Farben (1 für Wörter, NaN für leere Felder)
+color_matrix = np.where(crosstab != '', 1, np.nan)
+
 # Erstelle die Plotly-Heatmap mit grauen Linien
 fig = go.Figure(data=go.Heatmap(
-    z=np.ones(crosstab.shape),  # Dummy-Daten für die Heatmap
+    z=color_matrix,  # Nutze die Maskenmatrix für die Farbdarstellung
     x=alphabet,
     y=alphabet[::-1],  # Y-Achse umkehren
     text=crosstab.values,
     texttemplate="<b>%{text}</b>",
+    textfont={"size": 16},  # Größere Schriftgröße für Text
     colorscale=[[0, 'white'], [1, 'lightgreen']],
     showscale=False,
     xgap=1,  # Lücke für horizontale Linien
