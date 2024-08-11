@@ -149,17 +149,20 @@ for word in two_letter_words:
     first, second = word
     crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
+# Erstelle eine Matrix für die Farbdarstellung (NaN für keine Farbe)
+color_matrix = np.where(crosstab != '', 0.5, np.nan)
+
 # Interaktives Dashboard
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Erstelle die Plotly-Heatmap mit Annotationen
 fig = px.imshow(
-    np.ones(crosstab.shape),  # Dummy-Daten für die Heatmap
-    labels=dict(x="Second Letter", y="First Letter", color="Word Present"),
+    color_matrix,  # Verwende NaN für leere Felder
+    labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
     y=alphabet,
-    color_continuous_scale="Greens",
+    color_continuous_scale=[(0.0, "white"), (1.0, "lightgreen")],
     aspect="auto"  # Automatische Anpassung des Aspekts
 )
 
@@ -176,20 +179,27 @@ for i, row in enumerate(alphabet):
             customdata[i][j] = word_descriptions[word.lower()]  # Füge Beschreibung hinzu
 
 # Setze customdata und text für die Trace
-fig.update_traces(customdata=customdata, text=text_data, texttemplate="%{text}")
+fig.update_traces(customdata=customdata, text=text_data, texttemplate="<b>%{text}</b>", textfont={"size": 14})
 
 # Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
 fig.update_traces(
     hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>",
-    showscale=False  # Skala nicht anzeigen, da sie irrelevant ist
+    showscale=False  # Skala nicht anzeigen
 )
 
+# Achsenbeschriftungen auf allen Seiten
+fig.update_xaxes(side="top")
+fig.update_yaxes(autorange="reversed")
+
+# Anpassen der Größe
 # Anpassen der Größe und Layout der Grafik
 fig.update_layout(
     autosize=False,
     width=1000,
     height=1000,
     margin=dict(l=50, r=50, b=50, t=50),
+    xaxis_title="Second Letter",
+    yaxis_title="First Letter"
 )
 
 # Zeige das Diagramm an
