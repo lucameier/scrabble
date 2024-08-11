@@ -4,6 +4,9 @@ import plotly.express as px
 import numpy as np
 import json
 
+# Interaktives Dashboard konfigurieren
+st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+
 # Lade Sprachdaten
 def load_language_data(language):
     with open(f"{language}.json", "r") as file:
@@ -79,8 +82,7 @@ fig.update_layout(
 # Setze Lücken zwischen den Zellen
 fig.update_traces(xgap=2, ygap=2)
 
-# Interaktives Dashboard
-st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+# Titel der App
 st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Zeige das Diagramm an
