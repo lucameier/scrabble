@@ -143,7 +143,6 @@ word_descriptions = {
 
 
 
-
 # Buchstaben des Alphabets
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
@@ -194,8 +193,8 @@ fig.update_traces(
 )
 
 # Achsenbeschriftungen auf allen Seiten
-fig.update_xaxes(side="top", showgrid=True, gridwidth=1, gridcolor='black', tickvals=list(range(26)))
-fig.update_yaxes(autorange="reversed", showgrid=True, gridwidth=1, gridcolor='black', tickvals=list(range(26)))
+fig.update_xaxes(side="top", showgrid=False, tickvals=list(range(26)))
+fig.update_yaxes(autorange="reversed", showgrid=False, tickvals=list(range(26)))
 
 # Anpassen der Größe und Layout der Grafik
 fig.update_layout(
@@ -204,8 +203,13 @@ fig.update_layout(
     height=1000,
     margin=dict(l=50, r=50, b=50, t=50),
     xaxis_title="Second Letter",
-    yaxis_title="First Letter"
+    yaxis_title="First Letter",
+    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top"),
+    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, autorange="reversed"),
 )
+
+# Fügen Sie Lücken zwischen den Kacheln hinzu, um die Ränder zu zeigen
+fig.update_traces(xgap=2, ygap=2)
 
 # Zeige das Diagramm an
 st.plotly_chart(fig, use_container_width=True)
