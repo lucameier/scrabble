@@ -190,7 +190,7 @@ fig.update_traces(
 # Entferne Skala und setze Gitterlinien
 fig.update_layout(
     xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top", showgrid=False),
-    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=False,
+    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=False),
     coloraxis_showscale=False,
     margin=dict(l=50, r=50, b=50, t=50),
     width=1000,
