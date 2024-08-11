@@ -172,7 +172,7 @@ fig = px.imshow(
     labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
     y=alphabet[::-1],  # Umgekehrte Y-Achse für klassische Darstellung
-    color_continuous_scale=[(0.0, "lightyellow"), (1.0, "lightgreen")],
+    color_continuous_scale=[(0.0, "papayawhip"), (1.0, "lightgreen")],
     aspect="auto",  # Automatische Anpassung des Aspekts
     text_auto=True
 )
@@ -189,8 +189,8 @@ fig.update_traces(
 
 # Entferne Skala und setze Gitterlinien
 fig.update_layout(
-    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top", showgrid=True, gridcolor='lightgray', gridwidth=1),
-    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=True, gridcolor='lightgray', gridwidth=1),
+    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top", showgrid=False),
+    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=False,
     coloraxis_showscale=False,
     margin=dict(l=50, r=50, b=50, t=50),
     width=1000,
