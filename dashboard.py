@@ -138,6 +138,12 @@ word_descriptions = {
     "za": "Pizza."
 }
 
+
+
+
+
+
+
 # Buchstaben des Alphabets
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
@@ -188,10 +194,9 @@ fig.update_traces(
 )
 
 # Achsenbeschriftungen auf allen Seiten
-fig.update_xaxes(side="top")
-fig.update_yaxes(autorange="reversed")
+fig.update_xaxes(side="top", showgrid=True, gridwidth=1, gridcolor='black', tickvals=list(range(26)))
+fig.update_yaxes(autorange="reversed", showgrid=True, gridwidth=1, gridcolor='black', tickvals=list(range(26)))
 
-# Anpassen der Größe
 # Anpassen der Größe und Layout der Grafik
 fig.update_layout(
     autosize=False,
