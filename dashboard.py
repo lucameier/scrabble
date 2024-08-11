@@ -138,10 +138,6 @@ word_descriptions = {
     "za": "Pizza."
 }
 
-
-
-
-
 # Buchstaben des Alphabets
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
@@ -153,70 +149,52 @@ for word in two_letter_words:
     first, second = word
     crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
-# Interaktives Dashboard
-st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
-st.title("Interactive 2-Letter Scrabble Words Crosstab")
-
-import plotly.graph_objects as go
-
-# Erstelle eine Maskenmatrix für Farben (1 für Wörter, NaN für leere Felder)
-color_matrix = np.where(crosstab != '', 1, np.nan)
-
-# Erstelle die Plotly-Heatmap mit grauen Linien
-fig = go.Figure(data=go.Heatmap(
-    z=color_matrix,  # Nutze die Maskenmatrix für die Farbdarstellung
-    x=alphabet,
-    y=alphabet[::-1],  # Y-Achse umkehren
-    text=crosstab.values,
-    texttemplate="<b>%{text}</b>",
-    textfont={"size": 16},  # Größere Schriftgröße für Text
-    colorscale=[[0, 'white'], [1, 'lightgreen']],
-    showscale=False,
-    xgap=1,  # Lücke für horizontale Linien
-    ygap=1   # Lücke für vertikale Linien
-))
+# Erstelle eine Matrix für die Farbdarstellung (1 für Wörter, 0 für leere Felder)
+color_matrix = np.where(crosstab != '', 1, 0)
 
 # Initialisiere customdata mit Beschreibungen
 customdata = np.empty((26, 26), dtype=object)
 
 # Füge Beschreibungen als Hover-Information hinzu
+hover_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
-        if word.lower() in word_descriptions:
-            customdata[i][j] = word_descriptions[word.lower()]  # Füge Beschreibung hinzu
+        hover_data[i][j] = word_descriptions[word.lower()] if word.lower() in word_descriptions else ""
 
-# Setze customdata für die Trace
-fig.update_traces(customdata=customdata)
+# Erstelle die Plotly-Heatmap mit Annotationen
+fig = px.imshow(
+    color_matrix,  # Verwende die Maskenmatrix für die Farbdarstellung
+    labels=dict(x="Second Letter", y="First Letter"),
+    x=alphabet,
+    y=alphabet[::-1],  # Umgekehrte Y-Achse für klassische Darstellung
+    color_continuous_scale=[(0.0, "white"), (1.0, "lightgreen")],
+    aspect="auto",  # Automatische Anpassung des Aspekts
+    text_auto=True
+)
 
-# Hover-Template einstellen (Popup nur bei vorhandenen Wörtern)
+# Text und Hover-Informationen aktualisieren
 fig.update_traces(
+    text=crosstab.values,
+    texttemplate="<b>%{text}</b>",
+    textfont_size=16,  # Größere Schriftgröße für Text
+    customdata=hover_data,
     hovertemplate="<b>%{text}</b><br>Description: %{customdata}<extra></extra>"
 )
 
-# Anpassen der Größe und Layout der Grafik
+# Entferne Skala und setze Gitterlinien
 fig.update_layout(
-    autosize=False,
+    xaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet, side="top", showgrid=True, gridcolor='lightgray', gridwidth=1),
+    yaxis=dict(tickvals=list(range(len(alphabet))), ticktext=alphabet[::-1], autorange="reversed", showgrid=True, gridcolor='lightgray', gridwidth=1),
+    coloraxis_showscale=False,
+    margin=dict(l=50, r=50, b=50, t=50),
     width=1000,
     height=1000,
-    margin=dict(l=50, r=50, b=50, t=50),
-    xaxis=dict(
-        showgrid=True,
-        gridcolor='lightgray',  # Farbe der vertikalen Gitterlinien
-        gridwidth=0.5,
-        tickvals=list(range(len(alphabet))),
-        ticktext=alphabet,
-        side="top"
-    ),
-    yaxis=dict(
-        showgrid=True,
-        gridcolor='lightgray',  # Farbe der horizontalen Gitterlinien
-        gridwidth=0.5,
-        tickvals=list(range(len(alphabet))),
-        ticktext=alphabet[::-1],  # Umgekehrte Reihenfolge für Y-Achse
-        autorange="reversed"
-    ),
 )
+
+# Interaktives Dashboard
+st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+st.title("Interactive 2-Letter Scrabble Words Crosstab")
 
 # Zeige das Diagramm an
 st.plotly_chart(fig, use_container_width=True)
