@@ -9,7 +9,7 @@ st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 
 # Lade Sprachdaten
 def load_language_data(language):
-    with open(f"{language}.json", "r") as file:
+    with open(f"{language}.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     return data
 
@@ -32,6 +32,7 @@ crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 
 # Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
+    word = word.strip().lower()  # Entferne Leerzeichen und konvertiere in Kleinbuchstaben
     if len(word) == 2:  # Sicherstellen, dass es ein 2-Buchstaben-Wort ist
         first, second = word
         crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
