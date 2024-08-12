@@ -1,31 +1,42 @@
 {
-    "two_letter_words": [
-      "ai", "ao", "as", "da", "de", "do", "em", "eu", "há", "ir", "já", "lá", "li", "me", "na", "no", "os", "ou", "se", "si", "te", "tu", "um"
-    ],
-    "word_descriptions": {
-      "ai": "Expression of pain.",
-      "ao": "To the (masculine singular).",
-      "as": "The (feminine plural).",
-      "da": "Of the (feminine singular).",
-      "de": "Of.",
-      "do": "Of the (masculine singular).",
-      "em": "In.",
-      "eu": "I.",
-      "há": "There is, there are.",
-      "ir": "To go.",
-      "já": "Already.",
-      "lá": "There.",
-      "li": "Read (past tense).",
-      "me": "Me.",
-      "na": "In the (feminine singular).",
-      "no": "In the (masculine singular).",
-      "os": "The (masculine plural).",
-      "ou": "Or.",
-      "se": "If.",
-      "si": "Yes.",
-      "te": "You (informal singular).",
-      "tu": "You (informal singular).",
-      "um": "A, an (masculine singular)."
-    }
+  "two_letter_words": [
+    "ah", "ai", "ao", "as", "de", "do", "é", "em", "eu", "ha", "ho", "já", "la", "li", "lo", "me", "mi", "na", "no", "nu", "o", "os", "ou", "pa", "pe", "pi", "po", "que", "re", "se", "si", "te", "ti", "to", "um"
+  ],
+  "word_descriptions": {
+    "ah": "Expression of realization.",
+    "ai": "Expression of pain.",
+    "ao": "To the.",
+    "as": "The (feminine plural).",
+    "de": "Of.",
+    "do": "Of the.",
+    "é": "Is.",
+    "em": "In.",
+    "eu": "I.",
+    "ha": "There is/are.",
+    "ho": "Ho.",
+    "já": "Already.",
+    "la": "There.",
+    "li": "Read (past tense).",
+    "lo": "The.",
+    "me": "Me.",
+    "mi": "Me.",
+    "na": "In the (feminine singular).",
+    "no": "In the (masculine singular).",
+    "nu": "Nude.",
+    "o": "The (masculine singular).",
+    "os": "The (masculine plural).",
+    "ou": "Or.",
+    "pa": "Father.",
+    "pe": "Foot.",
+    "pi": "Pee.",
+    "po": "Well.",
+    "que": "That.",
+    "re": "King.",
+    "se": "If.",
+    "si": "Yes.",
+    "te": "You.",
+    "ti": "You.",
+    "to": "Everything.",
+    "um": "One."
   }
-  
+}

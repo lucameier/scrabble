@@ -1,34 +1,37 @@
 {
     "two_letter_words": [
-      "ai", "al", "ce", "da", "de", "di", "fa", "ho", "il", "in", "io", "la", "le", "li", "lo", "ma", "me", "mi", "ne", "no", "o", "pi", "re", "se", "si", "ti", "un"
+      "ah", "al", "an", "ce", "da", "de", "di", "è", "eh", "fa", "ho", "il", "in", "io", "la", "lo", "ma", "me", "mi", "ne", "no", "oh", "pi", "re", "se", "si", "te", "ti", "tu"
     ],
     "word_descriptions": {
-      "ai": "To the (masculine plural).",
+      "ah": "Expression of realization.",
       "al": "To the (masculine singular).",
+      "an": "And (obsolete).",
       "ce": "Us.",
       "da": "From.",
       "de": "Of.",
       "di": "Of.",
+      "è": "He/she/it is.",
+      "eh": "Expression of inquiry.",
       "fa": "Does/makes.",
       "ho": "I have.",
       "il": "The (masculine singular).",
       "in": "In.",
       "io": "I.",
       "la": "The (feminine singular).",
-      "le": "The (feminine plural).",
-      "li": "Them (masculine plural).",
       "lo": "The (masculine singular).",
       "ma": "But.",
       "me": "Me.",
       "mi": "Me (object pronoun).",
       "ne": "Of it, about it.",
       "no": "No.",
+      "oh": "Expression of surprise.",
       "pi": "More.",
       "re": "King.",
       "se": "If.",
       "si": "Yes.",
-      "ti": "You (informal singular).",
-      "un": "A, an (masculine singular)."
+      "te": "You.",
+      "ti": "You (object pronoun).",
+      "tu": "You (informal)."
     }
   }
   

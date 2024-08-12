@@ -1,6 +1,6 @@
 {
     "two_letter_words": [
-      "ah", "ay", "de", "di", "el", "en", "es", "ha", "he", "la", "lo", "me", "mi", "no", "oh", "os", "oy", "se", "si", "ta", "te", "ti", "tu", "ya"
+      "ah", "ay", "de", "di", "el", "en", "es", "ha", "he", "hi", "ho", "la", "lo", "me", "mi", "no", "oh", "os", "oy", "se", "si", "ta", "te", "ti", "tu", "ya", "yo"
     ],
     "word_descriptions": {
       "ah": "Expression of realization.",
@@ -12,6 +12,8 @@
       "es": "Is (third person singular of ser).",
       "ha": "Has (third person singular of haber).",
       "he": "Have (first person singular of haber).",
+      "hi": "Informal greeting.",
+      "ho": "Expression of surprise.",
       "la": "The (feminine singular).",
       "lo": "The (neuter).",
       "me": "Me.",
@@ -21,12 +23,13 @@
       "os": "You (plural informal).",
       "oy": "Today.",
       "se": "Himself, herself, itself.",
-      "si": "If.",
+      "si": "Yes.",
       "ta": "Your (informal, feminine).",
       "te": "You (informal).",
       "ti": "You (object form).",
       "tu": "Your (informal).",
-      "ya": "Already."
+      "ya": "Already.",
+      "yo": "I."
     }
   }
   
