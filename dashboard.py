@@ -14,7 +14,7 @@ def load_language_data(language):
     return data
 
 # Verfügbare Sprachen
-languages = ["english", "french", "spanish", "german", "italian", "portuguese", "dutch"]
+languages = ["english", "french", "spanish", "german", "italian", "portuguese", "dutch", "danish", "swedish", "norwegian", "finnish", "hungarian", "polish", "czech", "russian", "greek"]
 
 # Sprache auswählen
 selected_language = st.selectbox("Select Language", languages)
@@ -32,8 +32,9 @@ crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 
 # Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
-    first, second = word
-    crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
+    if len(word) == 2:  # Sicherstellen, dass es ein 2-Buchstaben-Wort ist
+        first, second = word
+        crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
 # Erstelle eine Matrix für die Farbdarstellung (1 für Wörter, 0 für leere Felder)
 color_matrix = np.where(crosstab != '', 1, 0)
@@ -46,14 +47,14 @@ hover_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
-        hover_data[i][j] = word_descriptions[word.lower()] if word.lower() in word_descriptions else ""
+        hover_data[i][j] = word_descriptions.get(word.lower(), "")
 
 # Erstelle die Plotly-Heatmap mit Annotationen
 fig = px.imshow(
     color_matrix,  # Verwende die Maskenmatrix für die Farbdarstellung
     labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
-    y=alphabet[::-1],  # Umgekehrte Y-Achse für klassische Darstellung
+    y=alphabet,  # Korrigiere die Y-Achse, um alphabet zu verwenden
     color_continuous_scale=[(0.0, "papayawhip"), (1.0, "lightgreen")],
     aspect="auto",  # Automatische Anpassung des Aspekts
     text_auto=True
