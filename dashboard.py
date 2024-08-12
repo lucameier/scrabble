@@ -6,7 +6,11 @@ import json
 import os
 
 # Interaktives Dashboard konfigurieren
-st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
+st.set_page_config(
+    page_title="Scrabble 2-Letter Words",
+    page_icon="🅰️",
+    layout="wide"
+)
 
 # Verzeichnis mit JSON-Dateien
 json_directory = "."  # Hier können Sie das Verzeichnis anpassen, in dem sich die JSON-Dateien befinden
