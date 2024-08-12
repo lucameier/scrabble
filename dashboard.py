@@ -3,24 +3,38 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 import json
+import os
 
 # Interaktives Dashboard konfigurieren
 st.set_page_config(page_title="Scrabble 2-Letter Words", layout="wide")
 
+# Verzeichnis mit JSON-Dateien
+json_directory = "."  # Hier können Sie das Verzeichnis anpassen, in dem sich die JSON-Dateien befinden
+
+# Alle JSON-Dateien im Verzeichnis auflisten
+def list_json_files(directory):
+    return [f for f in os.listdir(directory) if f.endswith('.json')]
+
 # Lade Sprachdaten
-def load_language_data(language):
-    with open(f"{language}.json", "r", encoding="utf-8") as file:
+def load_language_data(language_file):
+    with open(language_file, "r", encoding="utf-8") as file:
         data = json.load(file)
     return data
 
-# Verfügbare Sprachen
-languages = ["english", "french", "spanish", "german", "italian", "portuguese", "dutch", "danish", "swedish", "norwegian", "finnish", "hungarian", "polish", "czech", "russian", "greek"]
+# JSON-Dateien auflisten
+json_files = list_json_files(json_directory)
+
+# Verfügbare Sprachen basierend auf Dateinamen (ohne .json)
+languages = [os.path.splitext(file)[0] for file in json_files]
 
 # Sprache auswählen
 selected_language = st.selectbox("Select Language", languages)
 
+# Pfad zur ausgewählten Sprachdatei
+language_file = f"{selected_language}.json"
+
 # Sprachdaten laden
-data = load_language_data(selected_language)
+data = load_language_data(language_file)
 two_letter_words = data["two_letter_words"]
 word_descriptions = data["word_descriptions"]
 
