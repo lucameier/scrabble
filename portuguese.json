@@ -1,6 +1,6 @@
 {
     "two_letter_words": [
-      "ai", "ao", "as", "da", "de", "do", "é", "em", "eu", "há", "ir", "já", "lá", "li", "me", "na", "no", "o", "os", "ou", "se", "si", "te", "tu", "um"
+      "ai", "ao", "as", "da", "de", "do", "em", "eu", "há", "ir", "já", "lá", "li", "me", "na", "no", "os", "ou", "se", "si", "te", "tu", "um"
     ],
     "word_descriptions": {
       "ai": "Expression of pain.",
@@ -9,7 +9,6 @@
       "da": "Of the (feminine singular).",
       "de": "Of.",
       "do": "Of the (masculine singular).",
-      "é": "He/she/it is.",
       "em": "In.",
       "eu": "I.",
       "há": "There is, there are.",
@@ -20,7 +19,6 @@
       "me": "Me.",
       "na": "In the (feminine singular).",
       "no": "In the (masculine singular).",
-      "o": "The (masculine singular).",
       "os": "The (masculine plural).",
       "ou": "Or.",
       "se": "If.",

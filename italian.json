@@ -1,6 +1,6 @@
 {
     "two_letter_words": [
-      "ai", "al", "ce", "da", "de", "di", "è", "fa", "ho", "il", "in", "io", "la", "le", "li", "lo", "ma", "me", "mi", "ne", "no", "o", "pi", "re", "se", "si", "ti", "un"
+      "ai", "al", "ce", "da", "de", "di", "fa", "ho", "il", "in", "io", "la", "le", "li", "lo", "ma", "me", "mi", "ne", "no", "o", "pi", "re", "se", "si", "ti", "un"
     ],
     "word_descriptions": {
       "ai": "To the (masculine plural).",
@@ -9,7 +9,6 @@
       "da": "From.",
       "de": "Of.",
       "di": "Of.",
-      "è": "He/she/it is.",
       "fa": "Does/makes.",
       "ho": "I have.",
       "il": "The (masculine singular).",
@@ -24,7 +23,6 @@
       "mi": "Me (object pronoun).",
       "ne": "Of it, about it.",
       "no": "No.",
-      "o": "Or.",
       "pi": "More.",
       "re": "King.",
       "se": "If.",
