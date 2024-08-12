@@ -40,9 +40,6 @@ for word in two_letter_words:
 color_matrix = np.where(crosstab != '', 1, 0)
 
 # Initialisiere customdata mit Beschreibungen
-customdata = np.empty((26, 26), dtype=object)
-
-# Füge Beschreibungen als Hover-Information hinzu
 hover_data = np.empty((26, 26), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
@@ -54,7 +51,7 @@ fig = px.imshow(
     color_matrix,  # Verwende die Maskenmatrix für die Farbdarstellung
     labels=dict(x="Second Letter", y="First Letter"),
     x=alphabet,
-    y=alphabet,  # Korrigiere die Y-Achse, um alphabet zu verwenden
+    y=alphabet,  # Verwende alphabet für die y-Achse
     color_continuous_scale=[(0.0, "papayawhip"), (1.0, "lightgreen")],
     aspect="auto",  # Automatische Anpassung des Aspekts
     text_auto=True
