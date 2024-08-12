@@ -3,6 +3,11 @@
 
 This repository contains a Streamlit application that visualizes valid two-letter Scrabble words for multiple languages. The dashboard displays a heatmap that allows users to explore and learn about these words interactively.
 
+## Demo
+
+Demo here: https://scrabble-words.streamlit.app/
+
+
 ## Features
 
 - **Interactive Heatmap**: Displays two-letter words with their meanings for the selected language.
