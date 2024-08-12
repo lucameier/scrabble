@@ -19,11 +19,13 @@ json_directory = "."  # Hier können Sie das Verzeichnis anpassen, in dem sich d
 def list_json_files(directory):
     return [f for f in os.listdir(directory) if f.endswith('.json')]
 
+
 # Lade Sprachdaten
 def load_language_data(language_file):
     with open(language_file, "r", encoding="utf-8") as file:
         data = json.load(file)
     return data
+
 
 # JSON-Dateien auflisten
 json_files = list_json_files(json_directory)
@@ -54,7 +56,8 @@ crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 # Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
     word = word.strip().lower()  # Entferne Leerzeichen und konvertiere in Kleinbuchstaben
-    if len(word) == 2 and all(c in alphabet for c in word):  # Sicherstellen, dass es ein 2-Buchstaben-Wort mit erlaubten Zeichen ist
+    # Sicherstellen, dass es ein 2-Buchstaben-Wort mit erlaubten Zeichen ist
+    if len(word) == 2 and all(c in alphabet for c in word):
         first, second = word
         crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
