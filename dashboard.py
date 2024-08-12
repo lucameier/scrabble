@@ -27,8 +27,11 @@ json_files = list_json_files(json_directory)
 # Verfügbare Sprachen basierend auf Dateinamen (ohne .json)
 languages = [os.path.splitext(file)[0] for file in json_files]
 
+# Standardmäßig Englisch auswählen
+default_language_index = languages.index('english') if 'english' in languages else 0
+
 # Sprache auswählen
-selected_language = st.selectbox("Select Language", languages)
+selected_language = st.selectbox("Select Language", languages, index=default_language_index)
 
 # Pfad zur ausgewählten Sprachdatei
 language_file = f"{selected_language}.json"
@@ -38,7 +41,7 @@ data = load_language_data(language_file)
 two_letter_words = data["two_letter_words"]
 word_descriptions = data["word_descriptions"]
 
-# Buchstaben des Alphabets
+# Buchstaben des Alphabets (nur A-Z)
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 
 # Kreuztabelle initialisieren
@@ -47,7 +50,7 @@ crosstab = pd.DataFrame('', index=alphabet, columns=alphabet)
 # Wörter in die Kreuztabelle eintragen
 for word in two_letter_words:
     word = word.strip().lower()  # Entferne Leerzeichen und konvertiere in Kleinbuchstaben
-    if len(word) == 2:  # Sicherstellen, dass es ein 2-Buchstaben-Wort ist
+    if len(word) == 2 and all(c in alphabet for c in word):  # Sicherstellen, dass es ein 2-Buchstaben-Wort mit erlaubten Zeichen ist
         first, second = word
         crosstab.loc[first, second] = word.upper()  # Zeige Wörter in Großbuchstaben
 
@@ -55,7 +58,7 @@ for word in two_letter_words:
 color_matrix = np.where(crosstab != '', 1, 0)
 
 # Initialisiere customdata mit Beschreibungen
-hover_data = np.empty((26, 26), dtype=object)
+hover_data = np.empty((len(alphabet), len(alphabet)), dtype=object)
 for i, row in enumerate(alphabet):
     for j, col in enumerate(alphabet):
         word = crosstab.loc[row, col]
