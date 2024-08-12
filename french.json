@@ -1,6 +1,6 @@
 {
     "two_letter_words": [
-      "ah", "ai", "as", "au", "be", "bu", "ça", "ce", "da", "de", "do", "du", "en", "es", "et", "eu", "ha", "il", "je", "la", "le", "lu", "ma", "me", "mu", "na", "ne", "ni", "no", "nu", "oh", "on", "ou", "sa", "se", "si", "su", "ta", "te", "to", "tu", "un", "va", "vu", "y", "yo"
+      "ah", "ai", "as", "au", "be", "bu", "ça", "ce", "da", "de", "do", "du", "en", "es", "et", "eu", "ha", "il", "je", "la", "le", "lu", "ma", "me", "mu", "na", "ne", "ni", "no", "nu", "oh", "on", "ou", "sa", "se", "si", "su", "ta", "te", "to", "tu", "un", "va", "vu", "yo"
     ],
     "word_descriptions": {
       "ah": "An expression of realization or surprise.",
@@ -47,7 +47,6 @@
       "un": "One; a number or indefinite article.",
       "va": "Goes; third person singular present of aller.",
       "vu": "Seen; past participle of voir.",
-      "y": "There; adverb of place.",
       "yo": "An informal greeting or exclamation."
     }
   }
